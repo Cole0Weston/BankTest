@@ -8,8 +8,25 @@ namespace BankTest
     public class UnitTest1
     {
         [TestMethod]
-        public void TestMethod1()
+        public void Debit_WhenAmountIsLessThanZero_ShouldThrowArgumentOutOfRange()
         {
+            // arrange  
+            double beginningBalance = 11.99;
+            double debitAmount = 1.01;
+            BankAccount account = new BankAccount("Mr. Bryan Walton", beginningBalance);
+
+            // act  
+            try
+            {
+                account.Debit(debitAmount);
+            }
+            catch (ArgumentOutOfRangeException e)
+            {
+                // assert  
+                StringAssert.Contains(e.Message, BankAccount.DebitAmountLessThanZeroMessage);
+                return;
+            }
+            Assert.Fail("No exception was thrown.");
         }
         [TestMethod]
         public void Debit_WithValidAmount_UpdatesBalance()
@@ -34,12 +51,10 @@ namespace BankTest
         {
             // arrange  
             double beginningBalance = 11.99;
-            double debitAmount = 5.00;
+            double debitAmount = 5.44;
             BankAccount account = new BankAccount("Mr. Bryan Walton", beginningBalance);
 
             // act  
-            account.Debit(debitAmount);
-
             try
             {
                 account.Debit(debitAmount);

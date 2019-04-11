@@ -54,7 +54,7 @@ namespace BankAccountNS
 
             m_balance -= amount; // intentionally incorrect code  
         }
-
+        public const string CreditAmountLessThanZeroMessage = "Credit amount less than zero";
         public void Credit(double amount)
         {
             if (m_frozen)
@@ -64,10 +64,10 @@ namespace BankAccountNS
 
             if (amount < 0)
             {
-                throw new ArgumentOutOfRangeException("amount");
+                throw new ArgumentOutOfRangeException("amount", amount, CreditAmountLessThanZeroMessage);
             }
 
-            m_balance += amount;
+            m_balance -= amount;
         }
 
         private void FreezeAccount()
